@@ -1,0 +1,26 @@
+<div class="acerca-contenedor">
+
+  <div class="perfil-card">
+
+    <div class="perfil-imagen">
+      <img [src]="student.profileImageUrl" alt="Foto de perfil de {{ student.name }}">
+    </div>
+
+    <div class="contenido-perfil">
+      <h1>{{ student.name }}</h1>
+      <h2>{{ student.major }}</h2>
+      <p class="universidad">{{ student.university }}</p>
+
+      <hr>
+
+      <p class="bio">{{ student.bio }}</p>
+
+      <h3>Habilidades Técnicas</h3>
+      <div class="skills-contenedor">
+        <span *ngFor="let skill of student.skills" class="skill-tag">
+          {{ skill }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

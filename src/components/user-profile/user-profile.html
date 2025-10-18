@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+
+<div class="user-profile">
+  <div class="header">
+    <h2>Lista de Usuarios</h2>
+
+    <div class="buscar-contenedor">
+      <span class="buscar-icon"><span class="material-symbols-outlined">search</span></span>
+      <input
+        type="text"
+        class="buscar-input"
+        placeholder="Buscar usuario por ID"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="applyFilter()"
+      />
+      <button
+        *ngIf="searchTerm"
+        class="clear-btn"
+        (click)="clearSearch()"
+        title="Limpiar búsqueda"
+      >
+        &times;</button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-indicator">Cargando...</div>
+
+  <ul *ngIf="!isLoading">
+    <li *ngFor="let user of filteredUsers">
+      <span>
+        <strong>{{ user.nombre }}</strong> ({{ user.role }}) - {{ user.email }}
+        <span [class.status-active]="user.activo" [class.status-inactive]="!user.activo">
+          {{ user.activo ? 'Activo' : 'Inactivo' }}
+        </span>
+      </span>
+      <div class="user-actions">
+        <button class="edit" (click)="openEditForm(user)">Editar</button>
+        <button class="delete" (click)="deleteUser(user.id)">Eliminar</button>
+      </div>
+    </li>
+
+    <li *ngIf="!isLoading && filteredUsers.length === 0" class="no-results">
+      No se encontraron usuarios.
+    </li>
+  </ul>
+
+  <button class="add-btn" (click)="openCreateForm()" title="Agregar nuevo usuario">+</button>
+
+  <div class="form-overlay" *ngIf="showFormOverlay">
+    <div class="form-container">
+      <h3>{{ editingUserId ? 'Editar usuario' : 'Nuevo usuario' }}</h3>
+
+      <form [formGroup]="userForm" (ngSubmit)="saveUser()">
+
+        <input formControlName="nombre" placeholder="Nombre" />
+        <div *ngIf="userForm.get('nombre')?.invalid && userForm.get('nombre')?.touched" class="error">
+          El nombre es requerido.
+        </div>
+
+        <input formControlName="edad" type="number" placeholder="Edad" />
+        <div *ngIf="userForm.get('edad')?.touched && userForm.get('edad')?.errors?.['min']" class="error">
+          La edad debe ser mayor a 0.
+        </div>
+
+        <input formControlName="email" placeholder="Email" />
+        <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors?.['required']" class="error">
+          El email es requerido.
+        </div>
+        <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.errors?.['email']" class="error">
+          Formato de email inválido.
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" [disabled]="userForm.invalid">
+            {{ editingUserId ? 'Actualizar' : 'Guardar' }}
+          </button>
+          <button type="button" (click)="closeForm()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+.app-footer{
+  margin-top: auto;
+}
+
+footer {
+  background: #168ddc;
+  color: #ffffff;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.footer-contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-contenedor p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.redes-links {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.redes-links a {
+  color: #ffffff;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.redes-links a:hover {
+  color: #616161;
+  transform: translateY(-3px);
+}
+
+.redes-links svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
